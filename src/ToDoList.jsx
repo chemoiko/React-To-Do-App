@@ -11,20 +11,32 @@ function ToDoList(){
         setNewTask(event.target.value);
     }
 
-    function addTask(){
-
+    function addTask(){     //if not equal to empty string then add new task
+        if(newTask.trim() !==""){
+            setTasks(t => [...t, newTask]);
+            setNewTask("");
+        }
     }
 
     function deleteTask(index){
-        
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
     }
 
     function moveTaskUp(index){
-
+        if(index > 0){
+            const updatedTasks = [...tasks];
+            [updatedTasks[index], updatedTasks[index - 1]] =[updatedTasks[index - 1], updatedTasks[index]];
+            setTasks(updatedTasks);
+        }
     }
 
     function moveTaskDown(index){
-
+        if(index < tasks.length -1){
+            const updatedTasks = [...tasks];
+            [updatedTasks[index], updatedTasks[index + 1]] =[updatedTasks[index + 1], updatedTasks[index]];
+            setTasks(updatedTasks);
+        }
     }
     return (
     <div className="to-do-list">
@@ -48,15 +60,15 @@ function ToDoList(){
             <li key={index}>
                 <span className="text">{task}</span>
                 <button className="delete-button"
-                onclick={() => deleteTask(index)}>
+                onClick={() => deleteTask(index)}>
                 Delete
                 </button>
                 <button className="move-button"
-                onclick={() => moveTaskUp(index)}>
+                onClick={() => moveTaskUp(index)}>
                 👆
                 </button>
                 <button className="move-button"
-                onclick={() => moveTaskDown(index)}>
+                onClick={() => moveTaskDown(index)}>
                 👇
                 </button>
             </li>
